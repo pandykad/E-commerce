@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const crypto = require('crypto');
-import { v1 as uuidv1 } from 'uuid';
+const uuidv1 = require("uuid/v1");
 
 
 
@@ -53,13 +53,13 @@ userSchema.virtual("password")
         return this._password
     })
 
-userSchema.method = {
+userSchema.methods = {
 
     authenticate: function(plainpassword){
         return this.securePassword(plainpassword) === this.encry_password
     },
     securePassword: function(plainpassword){
-        if(!password) return "";
+        if(!plainpassword) return "";
         try {
             return crypto.createHmac('sha256', this.salt)
                    .update(plainpassword)
